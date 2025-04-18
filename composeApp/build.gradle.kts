@@ -51,6 +51,10 @@ kotlin {
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
             implementation(libs.koin.compose.viewmodel.navigation)
+
+            // Voyager
+            implementation(libs.voyager.navigator)
+            implementation(libs.voyager.koin)
         }
     }
 }
