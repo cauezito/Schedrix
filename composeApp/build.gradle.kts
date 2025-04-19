@@ -40,6 +40,13 @@ kotlin {
 
             // Ktor
             implementation(libs.ktor.client.okhttp)
+
+            implementation(project.dependencies.platform(libs.compose.bom))
+            implementation(libs.compose.material3)
+            implementation(libs.compose.icons)
+
+            implementation(libs.compose.ui.tooling)
+            implementation(libs.compose.preview)
         }
 
         commonMain.dependencies {
@@ -52,6 +59,10 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
 
+            implementation(libs.jb.ui)
+            implementation(libs.jb.material3)
+
+
             // Koin
             implementation(project.dependencies.platform(libs.koin.bom))
             implementation(libs.koin.core)
@@ -62,6 +73,8 @@ kotlin {
             // Voyager
             implementation(libs.voyager.navigator)
             implementation(libs.voyager.koin)
+            implementation(libs.voyager.screenmodel)
+            implementation(libs.voyager.transitions)
 
             // Ktor and Ktorfit
             implementation(libs.ktorfit)
@@ -71,6 +84,8 @@ kotlin {
             implementation(libs.ktor.serialization.json)
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.ktor.client.logging)
+
+            implementation(libs.kotlinx.datetime)
         }
 
         iosMain.dependencies {
