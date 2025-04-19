@@ -2,6 +2,7 @@ package br.com.cauezito.schedrix.extensions
 
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDate
+import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.daysUntil
 import kotlinx.datetime.isoDayNumber
@@ -25,6 +26,15 @@ internal object DateExtensions {
     internal fun LocalDate.firstDayOfWeek() = firstDayOfMonth().dayOfWeek.isoDayNumber % 7
 
     internal fun LocalDate.daysInMonth() = firstDayOfMonth().daysUntil(nextMonth())
+
+    internal fun LocalDate.monthYearLabel() = "${month.name.lowercase().replaceFirstChar { it.uppercase() }} $year"
+
+    internal fun LocalDate.formatStartAndEnd(): Pair<String, String> {
+        val start = LocalDateTime(year, month, dayOfMonth, 0, 0, 0)
+        val end = LocalDateTime(year, month, dayOfMonth, 23, 59, 59)
+
+        return Pair(start.toString(), end.toString())
+    }
 
     internal fun getCurrentDate() = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
 }
