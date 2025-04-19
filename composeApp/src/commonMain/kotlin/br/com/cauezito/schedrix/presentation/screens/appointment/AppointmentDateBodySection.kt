@@ -1,7 +1,7 @@
 package br.com.cauezito.schedrix.presentation.screens.appointment
 
+import BackgroundedBox
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,13 +20,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import br.com.cauezito.schedrix.presentation.AppointmentState
-import br.com.cauezito.schedrix.ui.components.shared.CustomAnimation
 import br.com.cauezito.schedrix.presentation.model.AppointmentMonth
-import br.com.cauezito.schedrix.ui.components.shared.BackgroundedBox
+import br.com.cauezito.schedrix.ui.components.shared.CustomAnimation
+import br.com.cauezito.schedrix.ui.tokens.AppointmentStrings.CALENDAR_CONTENT_SELECT_DATE
+import br.com.cauezito.schedrix.ui.tokens.AppointmentStrings.CALENDAR_MEETING_INFO_DURATION_VALUE
+import br.com.cauezito.schedrix.ui.tokens.Dimens.dimens_24
+import br.com.cauezito.schedrix.ui.tokens.Dimens.dimens_28
+import br.com.cauezito.schedrix.ui.tokens.Dimens.dimens_3
+import br.com.cauezito.schedrix.ui.tokens.Dimens.dimens_4
+import br.com.cauezito.schedrix.ui.tokens.Dimens.dimens_6
 import kotlinx.datetime.LocalDate
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
@@ -52,10 +56,10 @@ internal fun AppointmentDateBodySection(
         } else {
             AppointmentDateHeaderSection(interviewerName = state.interviewerName)
 
-            Box {
+            Box(modifier = Modifier.fillMaxSize()) {
                 Surface(
-                    tonalElevation = 3.dp,
-                    shape = RoundedCornerShape(28.dp),
+                    tonalElevation = dimens_3,
+                    shape = RoundedCornerShape(dimens_28),
                     modifier = Modifier
                         .fillMaxWidth()
                         .align(Alignment.BottomCenter)
@@ -80,16 +84,16 @@ private fun CardContent(
     onChangeMonth: (AppointmentMonth) -> Unit,
 ) {
     Column(
-        modifier = Modifier.padding(horizontal = 24.dp, vertical = 28.dp),
+        modifier = Modifier.padding(horizontal = dimens_24, vertical = dimens_28),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        AppointmentMeetingInfo()
+        AppointmentMeetingInfo(currentTimeZone = state.currentTimezone)
 
-        HorizontalDivider(Modifier.padding(vertical = 24.dp))
+        HorizontalDivider(Modifier.padding(vertical = dimens_24))
 
-        Text("Select a date", style = MaterialTheme.typography.bodySmall)
+        Text(CALENDAR_CONTENT_SELECT_DATE, style = MaterialTheme.typography.bodySmall)
 
-        Spacer(Modifier.height(4.dp))
+        Spacer(Modifier.height(dimens_4))
 
         AppointmentCalendarSection(
             state = state,
@@ -100,13 +104,13 @@ private fun CardContent(
 }
 
 @Composable
-private fun AppointmentMeetingInfo() {
+private fun AppointmentMeetingInfo(currentTimeZone: String) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         Image(painter = painterResource(Res.drawable.ic_clock), contentDescription = null)
-        Spacer(Modifier.width(6.dp))
-        Text("30 minutes", style = MaterialTheme.typography.bodyLarge)
+        Spacer(Modifier.width(dimens_6))
+        Text(CALENDAR_MEETING_INFO_DURATION_VALUE, style = MaterialTheme.typography.bodyLarge)
     }
 
-    Spacer(Modifier.height(6.dp))
-    Text("Timezone: America/São Paulo", style = MaterialTheme.typography.bodyLarge)
+    Spacer(Modifier.height(dimens_6))
+    Text(currentTimeZone, style = MaterialTheme.typography.bodyLarge)
 }

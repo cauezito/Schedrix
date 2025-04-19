@@ -25,15 +25,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import br.com.cauezito.schedrix.extensions.DateExtensions.monthYearLabel
 import br.com.cauezito.schedrix.extensions.DateExtensions.weekDays
 import br.com.cauezito.schedrix.presentation.AppointmentState
-import br.com.cauezito.schedrix.ui.components.shared.CustomIcon
 import br.com.cauezito.schedrix.presentation.model.AppointmentCalendarDay
 import br.com.cauezito.schedrix.presentation.model.AppointmentMonth
 import br.com.cauezito.schedrix.presentation.model.AppointmentMonth.NEXT
 import br.com.cauezito.schedrix.presentation.model.AppointmentMonth.PREVIOUS
+import br.com.cauezito.schedrix.ui.components.shared.CustomIcon
+import br.com.cauezito.schedrix.ui.tokens.AppointmentStrings.CALENDAR_HEADER_ARROW_BACK
+import br.com.cauezito.schedrix.ui.tokens.AppointmentStrings.CALENDAR_HEADER_ARROW_NEXT
+import br.com.cauezito.schedrix.ui.tokens.Dimens.dimens_12
+import br.com.cauezito.schedrix.ui.tokens.Dimens.dimens_16
+import br.com.cauezito.schedrix.ui.tokens.Dimens.dimens_350
+import br.com.cauezito.schedrix.ui.tokens.Dimens.dimens_4
+import br.com.cauezito.schedrix.ui.tokens.Dimens.dimens_40
+import br.com.cauezito.schedrix.ui.tokens.Numbers.SEVEN
+import br.com.cauezito.schedrix.ui.tokens.OrangeAmber
+import br.com.cauezito.schedrix.ui.tokens.Weight
 import kotlinx.datetime.LocalDate
 
 @Composable
@@ -45,9 +54,9 @@ internal fun AppointmentCalendarSection(
 ) {
     Column(
         modifier = modifier
-            .height(350.dp)
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+            .height(dimens_350)
+            .padding(dimens_16),
+        verticalArrangement = Arrangement.spacedBy(dimens_12)
     ) {
         AppointmentCalendarHeader(
             monthYearLabel = state.currentMonthYear.monthYearLabel(),
@@ -59,7 +68,7 @@ internal fun AppointmentCalendarSection(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(1f),
+                .weight(Weight.SMALL),
             contentAlignment = Alignment.Center
         ) {
             if (state.showContentLoading) {
@@ -87,7 +96,7 @@ private fun AppointmentCalendarHeader(
     ) {
         CustomIcon(
             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-            contentDescription = "Click to navigate to the previous month",
+            contentDescription = CALENDAR_HEADER_ARROW_BACK,
             actionParam = PREVIOUS,
             onAction = onChangeMonth
         )
@@ -99,7 +108,7 @@ private fun AppointmentCalendarHeader(
 
         CustomIcon(
             imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-            contentDescription = "Click to navigate to the next month",
+            contentDescription = CALENDAR_HEADER_ARROW_NEXT,
             actionParam = NEXT,
             onAction = onChangeMonth
         )
@@ -115,7 +124,7 @@ private fun AppointmentWeekdayHeader() {
         weekDays.forEach { day ->
             Text(
                 text = day,
-                modifier = Modifier.weight(1f),
+                modifier = Modifier.weight(Weight.SMALL),
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.labelMedium
             )
@@ -130,7 +139,7 @@ private fun AppointmentCalendarGrid(
     onDateSelected: (LocalDate) -> Unit
 ) {
     LazyVerticalGrid(
-        columns = GridCells.Fixed(7),
+        columns = GridCells.Fixed(SEVEN),
         userScrollEnabled = false,
         modifier = Modifier.fillMaxWidth()
     ) {
@@ -139,13 +148,13 @@ private fun AppointmentCalendarGrid(
             key = { it.id }
         ) { day ->
             if (day.date == null || day.dayNumber == null) {
-                Spacer(modifier = Modifier.size(40.dp))
+                Spacer(modifier = Modifier.size(dimens_40))
             } else {
                 val isSelected = day.date == selectedDate
 
                 val backgroundColor = when {
-                    isSelected -> Color(0xFF1E88E5)
-                    day.isAvailable -> Color(0xFFFFB74D)
+                    isSelected -> MaterialTheme.colorScheme.primary
+                    day.isAvailable -> OrangeAmber
                     else -> Color.LightGray
                 }
 
@@ -158,8 +167,8 @@ private fun AppointmentCalendarGrid(
                 Box(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier
-                        .size(40.dp)
-                        .padding(4.dp)
+                        .size(dimens_40)
+                        .padding(dimens_4)
                         .background(
                             color = backgroundColor,
                             shape = MaterialTheme.shapes.small
