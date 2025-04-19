@@ -86,6 +86,7 @@ kotlin {
             implementation(libs.ktor.client.logging)
 
             implementation(libs.kotlinx.datetime)
+            implementation(libs.compottie)
         }
 
         iosMain.dependencies {
