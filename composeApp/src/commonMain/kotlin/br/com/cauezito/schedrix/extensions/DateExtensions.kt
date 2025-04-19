@@ -3,6 +3,7 @@ package br.com.cauezito.schedrix.extensions
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.LocalTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.daysUntil
 import kotlinx.datetime.isoDayNumber
@@ -37,4 +38,11 @@ internal object DateExtensions {
     }
 
     internal fun getCurrentDate() = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
+
+    fun LocalTime.formatAs12Hour(): String {
+        val hour12 = if (hour == 0 || hour == 12) 12 else hour % 12
+        val minuteStr = minute.toString().padStart(2, '0')
+        val amPm = if (hour < 12) "am" else "pm"
+        return "${hour12.toString().padStart(2, '0')}:${minuteStr}\n${amPm}"
+    }
 }
