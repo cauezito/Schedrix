@@ -1,4 +1,4 @@
-package br.com.cauezito.schedrix.presentation.components
+package br.com.cauezito.schedrix.presentation.screens.appointment
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.dp
 import br.com.cauezito.schedrix.extensions.DateExtensions.monthYearLabel
 import br.com.cauezito.schedrix.extensions.DateExtensions.weekDays
 import br.com.cauezito.schedrix.presentation.AppointmentState
-import br.com.cauezito.schedrix.presentation.components.shared.CustomIcon
+import br.com.cauezito.schedrix.ui.components.shared.CustomIcon
 import br.com.cauezito.schedrix.presentation.model.AppointmentCalendarDay
 import br.com.cauezito.schedrix.presentation.model.AppointmentMonth
 import br.com.cauezito.schedrix.presentation.model.AppointmentMonth.NEXT

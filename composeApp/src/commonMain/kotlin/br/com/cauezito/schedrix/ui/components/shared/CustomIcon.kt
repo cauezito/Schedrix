@@ -1,4 +1,4 @@
-package br.com.cauezito.schedrix.presentation.components.shared
+package br.com.cauezito.schedrix.ui.components.shared
 
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.clickable

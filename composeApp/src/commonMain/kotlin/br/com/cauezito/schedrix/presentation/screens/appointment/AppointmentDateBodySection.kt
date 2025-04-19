@@ -1,4 +1,4 @@
-package br.com.cauezito.schedrix.presentation.components
+package br.com.cauezito.schedrix.presentation.screens.appointment
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -24,8 +24,9 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import br.com.cauezito.schedrix.presentation.AppointmentState
-import br.com.cauezito.schedrix.presentation.components.shared.CustomAnimation
+import br.com.cauezito.schedrix.ui.components.shared.CustomAnimation
 import br.com.cauezito.schedrix.presentation.model.AppointmentMonth
+import br.com.cauezito.schedrix.ui.components.shared.BackgroundedBox
 import kotlinx.datetime.LocalDate
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
@@ -39,19 +40,7 @@ internal fun AppointmentDateBodySection(
     onDateSelected: (LocalDate) -> Unit,
     onChangeMonth: (AppointmentMonth) -> Unit,
 ) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(
-                Brush.verticalGradient(
-                    colors = listOf(
-                        Color(0xFF5CAEF5),
-                        Color(0xFF1E88E5),
-                        Color(0xFF1976D2),
-                    )
-                )
-            ),
-    ) {
+    BackgroundedBox {
         if (state.showScreenLoading) {
             Column(
                 modifier = Modifier.fillMaxSize(),
@@ -63,20 +52,22 @@ internal fun AppointmentDateBodySection(
         } else {
             AppointmentDateHeaderSection(interviewerName = state.interviewerName)
 
-            Surface(
-                tonalElevation = 3.dp,
-                shape = RoundedCornerShape(28.dp),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.BottomCenter)
-                    .padding(horizontal = 20.dp)
-                    .padding(bottom = 20.dp),
-            ) {
-                CardContent(
-                    state = state,
-                    onDateSelected = onDateSelected,
-                    onChangeMonth = onChangeMonth,
-                )
+            Box {
+                Surface(
+                    tonalElevation = 3.dp,
+                    shape = RoundedCornerShape(28.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.BottomCenter)
+                        .padding(horizontal = 20.dp)
+                        .padding(bottom = 20.dp),
+                ) {
+                    CardContent(
+                        state = state,
+                        onDateSelected = onDateSelected,
+                        onChangeMonth = onChangeMonth,
+                    )
+                }
             }
         }
     }
@@ -111,13 +102,11 @@ private fun CardContent(
 @Composable
 private fun AppointmentMeetingInfo() {
     Row(verticalAlignment = Alignment.CenterVertically) {
-        Image(
-            painter = painterResource(Res.drawable.ic_clock),
-            contentDescription = null
-        )
-
+        Image(painter = painterResource(Res.drawable.ic_clock), contentDescription = null)
         Spacer(Modifier.width(6.dp))
-
         Text("30 minutes", style = MaterialTheme.typography.bodyLarge)
     }
+
+    Spacer(Modifier.height(6.dp))
+    Text("Timezone: America/São Paulo", style = MaterialTheme.typography.bodyLarge)
 }
