@@ -10,7 +10,7 @@ import br.com.cauezito.schedrix.di.AppointmentDi.dataLayer
 import br.com.cauezito.schedrix.di.AppointmentDi.domainLayer
 import br.com.cauezito.schedrix.di.AppointmentDi.presentationLayer
 import br.com.cauezito.schedrix.domain.repository.AppointmentRepository
-import br.com.cauezito.schedrix.domain.useCase.GetAvailableTimesUseCase
+import br.com.cauezito.schedrix.domain.useCase.GetAvailableAppointmentTimesUseCase
 import br.com.cauezito.schedrix.presentation.AppointmentScreenModel
 import org.koin.dsl.module
 
@@ -35,7 +35,7 @@ private object AppointmentDi {
     }
 
     val domainLayer = module {
-        factory { GetAvailableTimesUseCase(get()) }
+        factory { GetAvailableAppointmentTimesUseCase(get()) }
     }
 
     val presentationLayer = module {
