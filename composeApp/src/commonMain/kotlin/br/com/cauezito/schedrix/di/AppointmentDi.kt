@@ -40,8 +40,6 @@ private object AppointmentDi {
     }
 
     val presentationLayer = module {
-        scope(named("appointmentFlow")) {
-            scoped { AppointmentScreenModel(get()) }
-        }
+        single { AppointmentScreenModel(get()) }
     }
 }
