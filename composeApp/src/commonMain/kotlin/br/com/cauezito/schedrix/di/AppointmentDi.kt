@@ -12,6 +12,7 @@ import br.com.cauezito.schedrix.di.AppointmentDi.presentationLayer
 import br.com.cauezito.schedrix.domain.repository.AppointmentRepository
 import br.com.cauezito.schedrix.domain.useCase.GetAvailableAppointmentTimesUseCase
 import br.com.cauezito.schedrix.presentation.AppointmentScreenModel
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 internal val appointmentModules = module {
@@ -39,6 +40,8 @@ private object AppointmentDi {
     }
 
     val presentationLayer = module {
-        factory { AppointmentScreenModel(get()) }
+        scope(named("appointmentFlow")) {
+            scoped { AppointmentScreenModel(get()) }
+        }
     }
 }
