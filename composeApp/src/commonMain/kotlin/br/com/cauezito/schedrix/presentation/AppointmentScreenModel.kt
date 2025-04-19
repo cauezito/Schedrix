@@ -2,9 +2,13 @@ package br.com.cauezito.schedrix.presentation
 
 import br.com.cauezito.schedrix.domain.useCase.GetAvailableAppointmentTimesUseCase
 import br.com.cauezito.schedrix.extensions.DateExtensions
+import br.com.cauezito.schedrix.extensions.DateExtensions.availableTimesFromSelectedDate
+import br.com.cauezito.schedrix.extensions.DateExtensions.formatAs12Hour
 import br.com.cauezito.schedrix.extensions.DateExtensions.formatStartAndEnd
 import br.com.cauezito.schedrix.extensions.DateExtensions.nextMonth
 import br.com.cauezito.schedrix.extensions.DateExtensions.previousMonth
+import br.com.cauezito.schedrix.extensions.StringExtensions.capitalizeFirstChar
+import br.com.cauezito.schedrix.extensions.StringExtensions.formatTimezone
 import br.com.cauezito.schedrix.presentation.mapper.asPresentation
 import br.com.cauezito.schedrix.presentation.mapper.mapToAppointmentCalendarDay
 import br.com.cauezito.schedrix.presentation.model.AppointmentDateTime
@@ -18,6 +22,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDate
+import kotlinx.datetime.TimeZone
 import kotlinx.datetime.number
 
 class AppointmentScreenModel(
@@ -34,7 +39,10 @@ class AppointmentScreenModel(
         val todayDate = DateExtensions.getCurrentDate().date
 
         choseStartAndEndDates = todayDate.formatStartAndEnd()
-        _state.value = _state.value.copy(currentMonthYear = todayDate)
+        _state.value = _state.value.copy(
+            currentMonthYear = todayDate,
+            currentTimezone = TimeZone.currentSystemDefault().toString().formatTimezone()
+        )
     }
 
     internal fun fetchAvailableTimes() = screenModelScope.launch {
@@ -77,13 +85,30 @@ class AppointmentScreenModel(
     }
 
     internal fun changeSelectedDate(date: LocalDate) {
+        val availableTimes = date.availableTimesFromSelectedDate(appointments)
+        val formattedTimes = availableTimes.map { time ->
+            time.availableAppointmentDateTime.time.formatAs12Hour()
+        }
+
         _state.value = _state.value.copy(
             selectedDate = date,
+            selectedDateTimes = availableTimes,
+            selectedDayOfWeekName = date.dayOfWeek.name.capitalizeFirstChar(),
+            selectedMonthName = date.month.name.capitalizeFirstChar(),
+            selectedDayOfMonthName = date.dayOfMonth.toString(),
+            selectedFormattedTimes = formattedTimes,
             calendarDays = mapToAppointmentCalendarDay(
                 currentMonth = _state.value.currentMonthYear,
                 appointments = appointments,
                 selectedDate = date
             )
         )
+    }
+
+    internal fun sendConfirmation(
+        name: String,
+        email: String
+    ) {
+        //TODO validate fields
     }
 }
