@@ -7,14 +7,22 @@ import br.com.cauezito.schedrix.data.remote.datasource.AppointmentRemoteDataSour
 import br.com.cauezito.schedrix.data.remote.network.HttpClientProvider
 import br.com.cauezito.schedrix.data.repository.AppointmentRepositoryImpl
 import br.com.cauezito.schedrix.di.AppointmentDi.dataLayer
+import br.com.cauezito.schedrix.di.AppointmentDi.domainLayer
+import br.com.cauezito.schedrix.di.AppointmentDi.presentationLayer
 import br.com.cauezito.schedrix.domain.repository.AppointmentRepository
+import br.com.cauezito.schedrix.domain.useCase.GetAvailableTimesUseCase
+import br.com.cauezito.schedrix.presentation.AppointmentScreenModel
 import org.koin.dsl.module
 
 internal val appointmentModules = module {
-    includes(dataLayer)
+    includes(
+        dataLayer,
+        domainLayer,
+        presentationLayer
+    )
 }
 
-internal object AppointmentDi {
+private object AppointmentDi {
     val dataLayer = module {
         single<AppointmentApi> {
             HttpClientProvider
@@ -25,5 +33,12 @@ internal object AppointmentDi {
         single<AppointmentRepository> { AppointmentRepositoryImpl(get()) }
         single<AppointmentRemoteDataSource> { AppointmentRemoteDataSourceImpl(get()) }
     }
-}
 
+    val domainLayer = module {
+        factory { GetAvailableTimesUseCase(get()) }
+    }
+
+    val presentationLayer = module {
+        factory { AppointmentScreenModel(get()) }
+    }
+}
