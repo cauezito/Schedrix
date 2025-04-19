@@ -1,4 +1,4 @@
-package br.com.cauezito.schedrix.data.model
+package br.com.cauezito.schedrix.data.remote.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

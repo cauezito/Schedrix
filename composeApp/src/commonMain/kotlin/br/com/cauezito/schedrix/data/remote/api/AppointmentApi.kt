@@ -1,6 +1,6 @@
-package br.com.cauezito.schedrix.data.api
+package br.com.cauezito.schedrix.data.remote.api
 
-import br.com.cauezito.schedrix.data.model.AppointmentResponse
+import br.com.cauezito.schedrix.data.remote.model.AppointmentResponse
 import de.jensklingenberg.ktorfit.http.GET
 import de.jensklingenberg.ktorfit.http.Query
 
