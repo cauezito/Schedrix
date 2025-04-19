@@ -9,7 +9,8 @@ class AppointmentRepositoryImpl(
 ) : AppointmentRepository {
 
     override suspend fun getAvailableTimes(
-        start: String,
-        end: String
-    ) = remoteDataSource.getAvailableTimes(start, end).asDomain()
+        startDate: String,
+        endDate: String,
+        placeHolderDate: String
+    ) = remoteDataSource.getAvailableTimes(startDate, endDate, placeHolderDate).asDomain()
 }

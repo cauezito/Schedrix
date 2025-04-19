@@ -6,7 +6,8 @@ class AppointmentRemoteDataSourceImpl(
     private val serverApi: AppointmentApi
 ) : AppointmentRemoteDataSource {
     override suspend fun getAvailableTimes(
-        start: String,
-        end: String
-    ) = serverApi.getAvailableTimes(start, end)
+        startDate: String,
+        endDate: String,
+        placeholderDate: String
+    ) = serverApi.getAvailableTimes(startDate, endDate, placeholderDate)
 }
