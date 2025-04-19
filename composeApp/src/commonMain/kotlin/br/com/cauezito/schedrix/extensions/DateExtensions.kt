@@ -1,0 +1,30 @@
+package br.com.cauezito.schedrix.extensions
+
+import kotlinx.datetime.Clock
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.daysUntil
+import kotlinx.datetime.isoDayNumber
+import kotlinx.datetime.toLocalDateTime
+
+internal object DateExtensions {
+    internal val weekDays = listOf("S", "M", "T", "W", "T", "F", "S")
+
+    internal fun LocalDate.nextMonth(): LocalDate = when (monthNumber) {
+        12 -> LocalDate(year = year + 1, monthNumber = 1, dayOfMonth = 1)
+        else -> LocalDate(year = year, monthNumber = monthNumber + 1, dayOfMonth = 1)
+    }
+
+    internal fun LocalDate.previousMonth(): LocalDate = when (monthNumber) {
+        1 -> LocalDate(year = year - 1, monthNumber = 12, dayOfMonth = 1)
+        else -> LocalDate(year = year, monthNumber = monthNumber - 1, dayOfMonth = 1)
+    }
+
+    internal fun LocalDate.firstDayOfMonth() = LocalDate(year = year, month = month, dayOfMonth = 1)
+
+    internal fun LocalDate.firstDayOfWeek() = firstDayOfMonth().dayOfWeek.isoDayNumber % 7
+
+    internal fun LocalDate.daysInMonth() = firstDayOfMonth().daysUntil(nextMonth())
+
+    internal fun getCurrentDate() = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
+}
