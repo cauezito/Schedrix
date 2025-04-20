@@ -32,39 +32,47 @@ class AppointmentScreenModel(
     private val _state = MutableStateFlow(AppointmentState())
     val state: StateFlow<AppointmentState> = _state
 
+    private val todayDate = DateExtensions.getCurrentDate().date
+    private val currentTimeZone = TimeZone.currentSystemDefault().toString().formatTimezone()
     private var appointments: List<AppointmentDateTime> = emptyList()
     private var choseStartAndEndDates: Pair<String, String> = Pair("", "")
 
     init {
-        val todayDate = DateExtensions.getCurrentDate().date
-
         choseStartAndEndDates = todayDate.formatStartAndEnd()
         _state.value = _state.value.copy(
             currentMonthYear = todayDate,
-            currentTimezone = TimeZone.currentSystemDefault().toString().formatTimezone()
+            currentTimezone = currentTimeZone
         )
     }
 
     internal fun fetchAvailableTimes() = screenModelScope.launch {
-        val monthPlaceHolder = _state.value.currentMonthYear.month.number.defineMonthPlaceholder()
+        try {
+            val monthPlaceHolder = _state.value.currentMonthYear.month.number.defineMonthPlaceholder()
 
-        val result = getAvailableTimes(
-            choseStartAndEndDates.first,
-            choseStartAndEndDates.second,
-            monthPlaceHolder
-        ).asPresentation()
+            val result = getAvailableTimes(
+                choseStartAndEndDates.first,
+                choseStartAndEndDates.second,
+                monthPlaceHolder
+            ).asPresentation()
 
-        appointments = result.availableAppointments
+            appointments = result.availableAppointments
 
-        _state.value = _state.value.copy(
-            calendarDays = mapToAppointmentCalendarDay(
-                currentMonth = _state.value.currentMonthYear,
-                appointments = appointments,
-                selectedDate = _state.value.selectedDate
-            ),
-            showScreenLoading = false,
-            showContentLoading = false
-        )
+            _state.value = _state.value.copy(
+                calendarDays = mapToAppointmentCalendarDay(
+                    currentMonth = _state.value.currentMonthYear,
+                    appointments = appointments,
+                    selectedDate = _state.value.selectedDate
+                ),
+                showScreenLoading = false,
+                showContentLoading = false
+            )
+        } catch (e: Exception) {
+            _state.value = _state.value.copy(
+                showScreenLoading = false,
+                showContentLoading = false,
+                showError = true
+            )
+        }
     }
 
     internal fun changeCurrentMonth(selectedMonth: AppointmentMonth) {
@@ -105,6 +113,16 @@ class AppointmentScreenModel(
         )
     }
 
+    internal fun tryAgain() {
+        _state.value = _state.value.copy(
+            currentMonthYear = todayDate,
+            currentTimezone = currentTimeZone,
+            showContentLoading = true,
+            showError = false
+        )
+
+        fetchAvailableTimes()
+    }
     internal fun sendConfirmation(
         name: String,
         email: String
