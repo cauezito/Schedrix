@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -24,26 +25,27 @@ import androidx.compose.ui.unit.dp
 import br.com.cauezito.schedrix.presentation.AppointmentState
 import br.com.cauezito.schedrix.presentation.model.AppointmentMonth
 import br.com.cauezito.schedrix.ui.components.shared.CustomAnimation
-import br.com.cauezito.schedrix.ui.tokens.AppointmentStrings.CALENDAR_CONTENT_SELECT_DATE
-import br.com.cauezito.schedrix.ui.tokens.AppointmentStrings.CALENDAR_MEETING_INFO_DURATION_VALUE
 import br.com.cauezito.schedrix.ui.tokens.Dimens.dimens_24
 import br.com.cauezito.schedrix.ui.tokens.Dimens.dimens_28
 import br.com.cauezito.schedrix.ui.tokens.Dimens.dimens_3
 import br.com.cauezito.schedrix.ui.tokens.Dimens.dimens_4
 import br.com.cauezito.schedrix.ui.tokens.Dimens.dimens_6
+import br.com.cauezito.schedrix.ui.tokens.Strings.CALENDAR_CONTENT_SELECT_DATE
+import br.com.cauezito.schedrix.ui.tokens.Strings.CALENDAR_MEETING_INFO_DURATION_VALUE
 import kotlinx.datetime.LocalDate
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import schedrix.composeapp.generated.resources.Res
 import schedrix.composeapp.generated.resources.ic_clock
 
-@OptIn(ExperimentalResourceApi::class)
+@OptIn(ExperimentalResourceApi::class, ExperimentalMaterial3Api::class)
 @Composable
 internal fun AppointmentDateBodySection(
     state: AppointmentState,
     onDateSelected: (LocalDate) -> Unit,
     onChangeMonth: (AppointmentMonth) -> Unit,
 ) {
+
     BackgroundedBox {
         if (state.showScreenLoading) {
             Column(

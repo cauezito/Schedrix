@@ -17,6 +17,7 @@ internal class AppointmentTimeScreen() : Screen {
         val screenModel = koinScreenModel<AppointmentScreenModel>()
         val navigator = LocalNavigator.currentOrThrow
         val state by screenModel.state.collectAsState()
+        val onBackPressed: () -> Unit = { navigator.pop() }
         val onSelectedTime: (String) -> Unit = { date ->
             //TODO VIEWMODEL to update
             navigator.push(AppointmentConfirmationScreen())
@@ -24,7 +25,8 @@ internal class AppointmentTimeScreen() : Screen {
 
         AppointmentTimeScreenContent(
             state = state,
-            onSelectedTime = onSelectedTime
+            onSelectedTime = onSelectedTime,
+            onBackPressed = onBackPressed
         )
     }
 
@@ -32,10 +34,12 @@ internal class AppointmentTimeScreen() : Screen {
     private fun AppointmentTimeScreenContent(
         state: AppointmentState,
         onSelectedTime: (String) -> Unit,
+        onBackPressed: () -> Unit
     ) {
         AppointmentTimeSelectionSection(
             state = state,
-            onSelectedTime = onSelectedTime
+            onSelectedTime = onSelectedTime,
+            onBackPressed
         )
     }
 }

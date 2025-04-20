@@ -27,9 +27,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import br.com.cauezito.schedrix.ui.tokens.AppointmentStrings.PARTNER_WELCOME_MESSAGE
-import br.com.cauezito.schedrix.ui.tokens.AppointmentStrings.PARTNER_WELCOME_TOPIC_ANIMATION
+import br.com.cauezito.schedrix.ui.tokens.Strings.PARTNER_WELCOME_MESSAGE
+import br.com.cauezito.schedrix.ui.tokens.Strings.PARTNER_WELCOME_TOPIC_ANIMATION
 import br.com.cauezito.schedrix.ui.components.shared.AnimatedHeader
 import br.com.cauezito.schedrix.ui.tokens.Dimens.dimens_16
 import br.com.cauezito.schedrix.ui.tokens.Dimens.dimens_60

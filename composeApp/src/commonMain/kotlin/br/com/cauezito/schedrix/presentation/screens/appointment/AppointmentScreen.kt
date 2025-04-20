@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import br.com.cauezito.schedrix.presentation.AppointmentScreenModel
 import br.com.cauezito.schedrix.presentation.AppointmentState
 import br.com.cauezito.schedrix.presentation.model.AppointmentMonth
@@ -14,7 +13,6 @@ import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import kotlinx.datetime.LocalDate
-import org.koin.core.scope.Scope
 
 internal class AppointmentScreen() : Screen {
     @Composable
@@ -24,6 +22,7 @@ internal class AppointmentScreen() : Screen {
 
         val state by screenModel.state.collectAsState()
         val onChangeMonth: (AppointmentMonth) -> Unit = screenModel::changeCurrentMonth
+        val onTryAgain: () -> Unit = screenModel::tryAgain
         val onDateSelected: (LocalDate) -> Unit = { date ->
             screenModel.changeSelectedDate(date)
             navigator.push(AppointmentTimeScreen())
@@ -36,7 +35,8 @@ internal class AppointmentScreen() : Screen {
         AppointmentScreenContent(
             state = state,
             onDateSelected = onDateSelected,
-            onChangeMonth = onChangeMonth
+            onChangeMonth = onChangeMonth,
+            onTryAgain = onTryAgain
         )
     }
 
@@ -44,12 +44,17 @@ internal class AppointmentScreen() : Screen {
     private fun AppointmentScreenContent(
         state: AppointmentState,
         onDateSelected: (LocalDate) -> Unit,
-        onChangeMonth: (AppointmentMonth) -> Unit
+        onChangeMonth: (AppointmentMonth) -> Unit,
+        onTryAgain: () -> Unit
     ) {
-        AppointmentDateBodySection(
-            state = state,
-            onDateSelected = onDateSelected,
-            onChangeMonth = onChangeMonth
-        )
+        if (state.showError) {
+            AppointmentErrorSection(onTryAgain = onTryAgain)
+        } else {
+            AppointmentDateBodySection(
+                state = state,
+                onDateSelected = onDateSelected,
+                onChangeMonth = onChangeMonth
+            )
+        }
     }
 }
