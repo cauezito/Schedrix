@@ -6,7 +6,8 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
 import kotlinx.datetime.TimeZone
-import kotlinx.datetime.daysUntil
+import kotlinx.datetime.format.FormatStringsInDatetimeFormats
+import kotlinx.datetime.format.byUnicodePattern
 import kotlinx.datetime.isoDayNumber
 import kotlinx.datetime.toLocalDateTime
 
@@ -26,8 +27,6 @@ internal object DateExtensions {
     internal fun LocalDate.firstDayOfMonth() = LocalDate(year = year, month = month, dayOfMonth = 1)
 
     internal fun LocalDate.firstDayOfWeek() = firstDayOfMonth().dayOfWeek.isoDayNumber % 7
-
-    internal fun LocalDate.daysInMonth() = firstDayOfMonth().daysUntil(nextMonth())
 
     internal fun LocalDate.monthYearLabel() = "${month.name.lowercase().replaceFirstChar { it.uppercase() }} $year"
 
@@ -51,5 +50,11 @@ internal object DateExtensions {
         appointments
             .filter { it.availableAppointmentDateTime.date  == this }
             .sortedBy { it.availableAppointmentDateTime.time
+    }
+
+    @OptIn(FormatStringsInDatetimeFormats::class)
+    internal fun LocalDateTime.formatLocalDateTime(format: String = "yyyy-MM-dd'T'HH:mm"): String {
+        val formatter = LocalDateTime.Format { byUnicodePattern(format) }
+        return formatter.format(this)
     }
 }

@@ -22,7 +22,7 @@ internal class AppointmentScreen() : Screen {
 
         val state by screenModel.state.collectAsState()
         val onChangeMonth: (AppointmentMonth) -> Unit = screenModel::changeCurrentMonth
-        val onTryAgain: () -> Unit = screenModel::tryAgainAfterAnError
+        val onTryAgain: () -> Unit = screenModel::tryAgainAfterError
         val onDateSelected: (LocalDate) -> Unit = { date ->
             screenModel.changeSelectedDate(date)
             navigator.push(AppointmentTimeScreen())

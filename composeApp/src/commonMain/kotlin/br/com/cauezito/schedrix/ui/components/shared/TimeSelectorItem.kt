@@ -16,6 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import br.com.cauezito.schedrix.extensions.DateExtensions.formatAs12Hour
+import br.com.cauezito.schedrix.presentation.model.AppointmentDateTime
 import br.com.cauezito.schedrix.ui.tokens.Dimens.dimens_1
 import br.com.cauezito.schedrix.ui.tokens.Dimens.dimens_12
 import br.com.cauezito.schedrix.ui.tokens.Dimens.dimens_16
@@ -25,8 +27,8 @@ import br.com.cauezito.schedrix.ui.tokens.OrangeAmber
 
 @Composable
 internal fun TimeSelectorItem(
-    time: String,
-    onSelectedTime: (String) -> Unit
+    time: AppointmentDateTime,
+    onSelectedTime: (AppointmentDateTime) -> Unit
 ) {
     Column(
         verticalArrangement = Arrangement.Center,
@@ -44,7 +46,7 @@ internal fun TimeSelectorItem(
     ) {
         Text(
             textAlign = TextAlign.Center,
-            text = time,
+            text = time.availableAppointmentDateTime.time.formatAs12Hour(),
             minLines = TWO
         )
     }

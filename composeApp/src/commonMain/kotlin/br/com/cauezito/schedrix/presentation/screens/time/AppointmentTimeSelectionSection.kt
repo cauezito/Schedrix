@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import br.com.cauezito.schedrix.presentation.AppointmentState
+import br.com.cauezito.schedrix.presentation.model.AppointmentDateTime
 import br.com.cauezito.schedrix.ui.components.shared.ScaffoldStructure
 import br.com.cauezito.schedrix.ui.components.shared.TimeSelectorItem
 import br.com.cauezito.schedrix.ui.tokens.Dimens.dimens_100
@@ -39,7 +40,7 @@ import br.com.cauezito.schedrix.ui.tokens.Strings.appointmentQuestion
 @Composable
 internal fun AppointmentTimeSelectionSection(
     state: AppointmentState,
-    onSelectedTime: (String) -> Unit,
+    onSelectedTime: (AppointmentDateTime) -> Unit,
     onBackPressed: () -> Unit
 ) {
     ScaffoldStructure(
@@ -103,9 +104,9 @@ internal fun AppointmentTimeSelectionSection(
                 verticalArrangement = Arrangement.spacedBy(dimens_12),
                 modifier = Modifier.fillMaxWidth().padding(all = dimens_12)
             ) {
-                items(state.selectedFormattedTimes) { time ->
+                items(state.selectedDateTimes) { date ->
                     TimeSelectorItem(
-                        time = time,
+                        time = date,
                         onSelectedTime = onSelectedTime
                     )
                 }

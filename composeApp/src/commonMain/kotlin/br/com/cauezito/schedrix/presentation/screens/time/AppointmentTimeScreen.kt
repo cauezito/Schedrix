@@ -5,6 +5,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import br.com.cauezito.schedrix.presentation.AppointmentScreenModel
 import br.com.cauezito.schedrix.presentation.AppointmentState
+import br.com.cauezito.schedrix.presentation.model.AppointmentDateTime
 import br.com.cauezito.schedrix.presentation.screens.confirmation.AppointmentConfirmationScreen
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
@@ -19,8 +20,8 @@ internal class AppointmentTimeScreen() : Screen {
         val screenModel = koinScreenModel<AppointmentScreenModel>()
         val state by screenModel.state.collectAsState()
         val onBackPressed: () -> Unit = { navigator.pop() }
-        val onSelectedTime: (String) -> Unit = { time ->
-            screenModel.storeChoseTime(time)
+        val onSelectedTime: (AppointmentDateTime) -> Unit = { dateTime ->
+            screenModel.storeChoseTime(dateTime)
             navigator.push(AppointmentConfirmationScreen())
         }
 
@@ -34,7 +35,7 @@ internal class AppointmentTimeScreen() : Screen {
     @Composable
     private fun AppointmentTimeScreenContent(
         state: AppointmentState,
-        onSelectedTime: (String) -> Unit,
+        onSelectedTime: (AppointmentDateTime) -> Unit,
         onBackPressed: () -> Unit
     ) {
         AppointmentTimeSelectionSection(

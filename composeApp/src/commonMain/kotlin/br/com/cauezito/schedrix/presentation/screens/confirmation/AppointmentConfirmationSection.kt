@@ -17,6 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import br.com.cauezito.schedrix.extensions.generateGoogleCalendarLink
+import br.com.cauezito.schedrix.openGoogleCalendar
 import br.com.cauezito.schedrix.presentation.AppointmentState
 import br.com.cauezito.schedrix.ui.components.shared.CustomButton
 import br.com.cauezito.schedrix.ui.components.shared.CustomInputField
@@ -43,6 +45,15 @@ internal fun AppointmentConfirmationSection(
 ) {
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
+
+    if (state.showGoogleCalendar) {
+        openGoogleCalendar(
+            redirectLink = generateGoogleCalendarLink(
+                userName = name,
+                startDateTime = state.finalSelectedDateTime,
+            )
+        )
+    }
 
     ScaffoldStructure(
         toolbarContentDescription = CONFIRMATION_SECTION_TOP_BAR_CONTENT_DESCRIPTION,
@@ -96,7 +107,7 @@ internal fun AppointmentConfirmationSection(
                     supportingText = {
                         state.isEmailValid
                             ?.takeIf { it.not() }
-                            ?.let { Text(CONFIRMATION_SECTION_EMAIL_INPUT_SUPPORT_TEXT)}
+                            ?.let { Text(CONFIRMATION_SECTION_EMAIL_INPUT_SUPPORT_TEXT) }
                     }
                 )
 
