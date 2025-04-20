@@ -147,3 +147,4 @@ To generate this report: `./gradlew :composeApp:koverHtmlReport`
 - Add local caching + offline support
 - Deeplink support  
 - UI tests
+- Previews (it’s tricky in CMP because the preview is incompatible with the commonMain source set, so I had to implement a workaround by creating the preview in the androidMain source set)
