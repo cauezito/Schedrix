@@ -21,7 +21,7 @@ internal class AppointmentTimeScreen() : Screen {
         val state by screenModel.state.collectAsState()
         val onBackPressed: () -> Unit = { navigator.pop() }
         val onSelectedTime: (AppointmentDateTime) -> Unit = { dateTime ->
-            screenModel.storeChoseTime(dateTime)
+            screenModel.selectAppointmentTime(dateTime)
             navigator.push(AppointmentConfirmationScreen())
         }
 

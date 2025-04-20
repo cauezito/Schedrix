@@ -3,12 +3,13 @@ package br.com.cauezito.schedrix.presentation
 import br.com.cauezito.schedrix.domain.useCase.GetAvailableAppointmentTimesUseCase
 import br.com.cauezito.schedrix.extensions.DateExtensions
 import br.com.cauezito.schedrix.extensions.DateExtensions.availableTimesFromSelectedDate
-import br.com.cauezito.schedrix.extensions.DateExtensions.formatAs12Hour
 import br.com.cauezito.schedrix.extensions.DateExtensions.formatStartAndEnd
 import br.com.cauezito.schedrix.extensions.DateExtensions.nextMonth
 import br.com.cauezito.schedrix.extensions.DateExtensions.previousMonth
 import br.com.cauezito.schedrix.extensions.StringExtensions.capitalizeFirstChar
 import br.com.cauezito.schedrix.extensions.StringExtensions.formatTimezone
+import br.com.cauezito.schedrix.extensions.ValidationConstants.EMAIL_REGEX
+import br.com.cauezito.schedrix.extensions.ValidationConstants.MIN_NAME_LENGTH
 import br.com.cauezito.schedrix.presentation.mapper.asPresentation
 import br.com.cauezito.schedrix.presentation.mapper.mapToAppointmentCalendarDay
 import br.com.cauezito.schedrix.presentation.model.AppointmentDateTime
@@ -96,9 +97,6 @@ class AppointmentScreenModel(
 
     internal fun changeSelectedDate(date: LocalDate) {
         val availableTimes = date.availableTimesFromSelectedDate(appointments)
-        val formattedTimes = availableTimes.map { time ->
-            time.availableAppointmentDateTime.time.formatAs12Hour()
-        }
 
         _state.value = _state.value.copy(
             selectedDate = date,
@@ -106,9 +104,9 @@ class AppointmentScreenModel(
             selectedDayOfWeekName = date.dayOfWeek.name.capitalizeFirstChar(),
             selectedMonthName = date.month.name.capitalizeFirstChar(),
             selectedDayOfMonthName = date.dayOfMonth.toString(),
-            selectedFormattedTimes = formattedTimes,
             isNameValid = null,
             isEmailValid = null,
+            finalSelectedDateTime = null,
             calendarDays = mapToAppointmentCalendarDay(
                 currentMonth = _state.value.currentMonthYear,
                 appointments = appointments,
@@ -117,14 +115,16 @@ class AppointmentScreenModel(
         )
     }
 
-    internal fun storeChoseTime(time: String) {
+    internal fun selectAppointmentTime(dateTime: AppointmentDateTime) {
         _state.value = _state.value.copy(
             isNameValid = null,
-            isEmailValid = null
+            isEmailValid = null,
+            showGoogleCalendar = false,
+            finalSelectedDateTime = dateTime.availableAppointmentDateTime
         )
     }
 
-    internal fun tryAgainAfterAnError() {
+    internal fun tryAgainAfterError() {
         _state.value = _state.value.copy(
             currentMonthYear = todayDate,
             currentTimezone = currentTimeZone,
@@ -137,20 +137,14 @@ class AppointmentScreenModel(
         fetchAvailableTimes()
     }
 
-    internal fun sendConfirmation(
-        name: String,
-        email: String
-    ) {
-        val isNameValid = name.trim().isNotEmpty() && name.trim().length > 5
-        val isEmailValid = email.trim().matches(Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\$"))
+    internal fun sendConfirmation(name: String, email: String) {
+        val isNameValid = name.trim().length >= MIN_NAME_LENGTH
+        val isEmailValid = email.trim().matches(EMAIL_REGEX)
 
         _state.value = _state.value.copy(
             isNameValid = isNameValid,
-            isEmailValid = isEmailValid
+            isEmailValid = isEmailValid,
+            showGoogleCalendar = isNameValid && isEmailValid
         )
-
-        if (!isNameValid || !isEmailValid) return
-
-        //prepare object to send it to backend
     }
 }
