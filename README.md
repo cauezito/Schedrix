@@ -67,6 +67,16 @@ Users can choose a date, pick a time, and confirm the meeting by filling in thei
 
 <br>
 
+**Coverage:**
+> ⚠️ I know the importance of a good test coverage. But for know, I focused to reach 100% only on presentation layer, especially on ScreenModel, because there are many logics there.
+
+![Screenshot 2025-04-20 at 16 33 36](https://github.com/user-attachments/assets/217983c4-1a5e-4b33-9268-16c8b495b4cf)
+
+![Screenshot 2025-04-20 at 16 31 18](https://github.com/user-attachments/assets/1ecdee98-0032-49df-b776-26532b3e682c)
+
+To generate this report: `./gradlew :composeApp:koverHtmlReport`
+
+
 ## Libraries used
 
 | Library          | Purpose                                   |
