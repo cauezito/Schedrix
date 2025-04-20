@@ -142,10 +142,8 @@ To generate this report: `./gradlew :composeApp:koverHtmlReport`
 
 <br>
 
-## Important improvements
+## Important future improvements
 
 - Add local caching + offline support
 - Deeplink support  
-- Accessibility improvements (TalkBack/VoiceOver)  
-- Add analytics for user interactions  
 - UI tests
