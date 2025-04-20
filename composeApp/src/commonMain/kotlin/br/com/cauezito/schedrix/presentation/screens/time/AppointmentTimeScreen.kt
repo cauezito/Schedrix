@@ -14,12 +14,13 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 internal class AppointmentTimeScreen() : Screen {
     @Composable
     override fun Content() {
-        val screenModel = koinScreenModel<AppointmentScreenModel>()
         val navigator = LocalNavigator.currentOrThrow
+
+        val screenModel = koinScreenModel<AppointmentScreenModel>()
         val state by screenModel.state.collectAsState()
         val onBackPressed: () -> Unit = { navigator.pop() }
-        val onSelectedTime: (String) -> Unit = { date ->
-            //TODO VIEWMODEL to update
+        val onSelectedTime: (String) -> Unit = { time ->
+            screenModel.storeChoseTime(time)
             navigator.push(AppointmentConfirmationScreen())
         }
 

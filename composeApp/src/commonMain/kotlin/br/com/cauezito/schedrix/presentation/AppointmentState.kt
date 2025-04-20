@@ -9,6 +9,8 @@ data class AppointmentState(
     val showScreenLoading: Boolean = true,
     val showContentLoading: Boolean = false,
     val showError: Boolean = false,
+    val isNameValid: Boolean? = null,
+    val isEmailValid: Boolean? = null,
     val currentMonthYear: LocalDate = DateExtensions.getCurrentDate().date,
     val interviewerName: String = "Cauê Santos",
     val selectedDate: LocalDate? = null,

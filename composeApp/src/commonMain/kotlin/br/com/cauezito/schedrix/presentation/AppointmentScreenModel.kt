@@ -66,7 +66,7 @@ class AppointmentScreenModel(
                 showScreenLoading = false,
                 showContentLoading = false
             )
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             _state.value = _state.value.copy(
                 showScreenLoading = false,
                 showContentLoading = false,
@@ -84,7 +84,9 @@ class AppointmentScreenModel(
 
         _state.value = _state.value.copy(
             currentMonthYear = updatedMonth,
-            showContentLoading = true
+            showContentLoading = true,
+            isNameValid = null,
+            isEmailValid = null,
         )
 
         choseStartAndEndDates = updatedMonth.formatStartAndEnd()
@@ -105,6 +107,8 @@ class AppointmentScreenModel(
             selectedMonthName = date.month.name.capitalizeFirstChar(),
             selectedDayOfMonthName = date.dayOfMonth.toString(),
             selectedFormattedTimes = formattedTimes,
+            isNameValid = null,
+            isEmailValid = null,
             calendarDays = mapToAppointmentCalendarDay(
                 currentMonth = _state.value.currentMonthYear,
                 appointments = appointments,
@@ -113,20 +117,40 @@ class AppointmentScreenModel(
         )
     }
 
-    internal fun tryAgain() {
+    internal fun storeChoseTime(time: String) {
+        _state.value = _state.value.copy(
+            isNameValid = null,
+            isEmailValid = null
+        )
+    }
+
+    internal fun tryAgainAfterAnError() {
         _state.value = _state.value.copy(
             currentMonthYear = todayDate,
             currentTimezone = currentTimeZone,
             showContentLoading = true,
+            isNameValid = null,
+            isEmailValid = null,
             showError = false
         )
 
         fetchAvailableTimes()
     }
+
     internal fun sendConfirmation(
         name: String,
         email: String
     ) {
-        //TODO validate fields
+        val isNameValid = name.trim().isNotEmpty() && name.trim().length > 5
+        val isEmailValid = email.trim().matches(Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\$"))
+
+        _state.value = _state.value.copy(
+            isNameValid = isNameValid,
+            isEmailValid = isEmailValid
+        )
+
+        if (!isNameValid || !isEmailValid) return
+
+        //prepare object to send it to backend
     }
 }
