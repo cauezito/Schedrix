@@ -153,3 +153,11 @@ To generate this report: `./gradlew :composeApp:koverHtmlReport`
 - Deeplink support  
 - UI tests
 - Previews (it’s tricky in CMP because the preview is incompatible with the commonMain source set, so I had to implement a workaround by creating the preview in the androidMain source set)
+
+## Dedicated time (Insane!)
+
+![Screenshot 2025-04-20 at 18 50 13](https://github.com/user-attachments/assets/6f1c3410-73c5-4548-97af-250b6b76e8c8)
+![Screenshot 2025-04-20 at 18 49 24](https://github.com/user-attachments/assets/5736a804-9c75-4899-8868-9f3960c810b3)
+![Screenshot 2025-04-20 at 18 50 32](https://github.com/user-attachments/assets/d990f379-38a7-4398-bfc5-dece7495ba81)
+
+
