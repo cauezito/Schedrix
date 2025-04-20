@@ -1,4 +1,4 @@
-package br.com.cauezito.schedrix.presentation.screens.appointment
+package br.com.cauezito.schedrix.presentation.screens.date
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -27,8 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import br.com.cauezito.schedrix.ui.tokens.Strings.PARTNER_WELCOME_MESSAGE
-import br.com.cauezito.schedrix.ui.tokens.Strings.PARTNER_WELCOME_TOPIC_ANIMATION
+import br.com.cauezito.schedrix.presentation.model.topics
 import br.com.cauezito.schedrix.ui.components.shared.AnimatedHeader
 import br.com.cauezito.schedrix.ui.tokens.Dimens.dimens_16
 import br.com.cauezito.schedrix.ui.tokens.Dimens.dimens_60
@@ -37,6 +36,8 @@ import br.com.cauezito.schedrix.ui.tokens.Dimens.dimens_8
 import br.com.cauezito.schedrix.ui.tokens.Numbers.ONE
 import br.com.cauezito.schedrix.ui.tokens.Numbers.THREE
 import br.com.cauezito.schedrix.ui.tokens.Numbers.ZERO
+import br.com.cauezito.schedrix.ui.tokens.Strings.PARTNER_WELCOME_MESSAGE
+import br.com.cauezito.schedrix.ui.tokens.Strings.PARTNER_WELCOME_TOPIC_ANIMATION
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.painterResource
 import schedrix.composeapp.generated.resources.Res
@@ -77,27 +78,6 @@ internal fun AppointmentDateHeaderSection(interviewerName: String) {
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun AnimatedTopicText() {
-    val topics = listOf(
-        "programming",
-        "video games",
-        "job offers",
-        "book recommendations",
-        "wellness",
-        "mental health",
-        "investments",
-        "travel experiences",
-        "productivity hacks",
-        "career growth",
-        "language learning",
-        "healthy habits",
-        "mindfulness",
-        "gym",
-        "book recommendations",
-        "coding challenges",
-        "public speaking",
-        "UX design"
-    )
-
     var index by remember { mutableStateOf(ZERO) }
     val topic by rememberUpdatedState(topics[index])
 

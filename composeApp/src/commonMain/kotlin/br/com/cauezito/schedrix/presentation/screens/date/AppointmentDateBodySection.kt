@@ -1,4 +1,4 @@
-package br.com.cauezito.schedrix.presentation.screens.appointment
+package br.com.cauezito.schedrix.presentation.screens.date
 
 import BackgroundedBox
 import androidx.compose.foundation.Image
@@ -68,7 +68,7 @@ internal fun AppointmentDateBodySection(
                         .padding(horizontal = 20.dp)
                         .padding(bottom = 20.dp),
                 ) {
-                    CardContent(
+                    AppointmentDateContent(
                         state = state,
                         onDateSelected = onDateSelected,
                         onChangeMonth = onChangeMonth,
@@ -80,7 +80,7 @@ internal fun AppointmentDateBodySection(
 }
 
 @Composable
-private fun CardContent(
+private fun AppointmentDateContent(
     state: AppointmentState,
     onDateSelected: (LocalDate) -> Unit,
     onChangeMonth: (AppointmentMonth) -> Unit,

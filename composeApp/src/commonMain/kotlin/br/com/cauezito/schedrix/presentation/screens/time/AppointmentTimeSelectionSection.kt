@@ -100,8 +100,8 @@ internal fun AppointmentTimeSelectionSection(
 
             LazyVerticalGrid(
                 columns = GridCells.Adaptive(dimens_100),
-                horizontalArrangement = Arrangement.spacedBy(dimens_12),
-                verticalArrangement = Arrangement.spacedBy(dimens_12),
+                horizontalArrangement = Arrangement.Center,
+                verticalArrangement = Arrangement.Center,
                 modifier = Modifier.fillMaxWidth().padding(all = dimens_12)
             ) {
                 items(state.selectedDateTimes) { date ->

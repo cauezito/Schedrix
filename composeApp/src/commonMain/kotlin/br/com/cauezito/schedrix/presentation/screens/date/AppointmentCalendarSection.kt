@@ -1,4 +1,4 @@
-package br.com.cauezito.schedrix.presentation.screens.appointment
+package br.com.cauezito.schedrix.presentation.screens.date
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -33,8 +33,6 @@ import br.com.cauezito.schedrix.presentation.model.AppointmentMonth
 import br.com.cauezito.schedrix.presentation.model.AppointmentMonth.NEXT
 import br.com.cauezito.schedrix.presentation.model.AppointmentMonth.PREVIOUS
 import br.com.cauezito.schedrix.ui.components.shared.CustomIcon
-import br.com.cauezito.schedrix.ui.tokens.Strings.CALENDAR_HEADER_ARROW_BACK
-import br.com.cauezito.schedrix.ui.tokens.Strings.CALENDAR_HEADER_ARROW_NEXT
 import br.com.cauezito.schedrix.ui.tokens.Dimens.dimens_12
 import br.com.cauezito.schedrix.ui.tokens.Dimens.dimens_16
 import br.com.cauezito.schedrix.ui.tokens.Dimens.dimens_350
@@ -42,6 +40,8 @@ import br.com.cauezito.schedrix.ui.tokens.Dimens.dimens_4
 import br.com.cauezito.schedrix.ui.tokens.Dimens.dimens_40
 import br.com.cauezito.schedrix.ui.tokens.Numbers.SEVEN
 import br.com.cauezito.schedrix.ui.tokens.OrangeAmber
+import br.com.cauezito.schedrix.ui.tokens.Strings.CALENDAR_HEADER_ARROW_BACK
+import br.com.cauezito.schedrix.ui.tokens.Strings.CALENDAR_HEADER_ARROW_NEXT
 import br.com.cauezito.schedrix.ui.tokens.Weight
 import kotlinx.datetime.LocalDate
 

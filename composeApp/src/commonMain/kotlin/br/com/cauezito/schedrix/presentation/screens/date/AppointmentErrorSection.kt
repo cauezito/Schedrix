@@ -1,4 +1,4 @@
-package br.com.cauezito.schedrix.presentation.screens.appointment
+package br.com.cauezito.schedrix.presentation.screens.date
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
