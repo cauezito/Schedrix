@@ -4,6 +4,11 @@ Schedrix is a simple calendar scheduling app made with **Compose Multiplatform**
 
 Users can choose a date, pick a time, and confirm the meeting by filling in their name and email. Then, Google Calendar opens in the browser with everything pre-filled.
 
+## Setup
+
+- Kotlin Multiplatform plugin installed in your Android Studio (for iOS support)
+- Xcode installed and configured 
+
 
 ## Preview
 
