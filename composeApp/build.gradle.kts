@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.ktorfit.plugin)
     alias(libs.plugins.kotlinSerialization)
+    alias(libs.plugins.kover)
 }
 
 kotlin {
@@ -18,7 +19,7 @@ kotlin {
             jvmTarget.set(JvmTarget.JVM_11)
         }
     }
-    
+
     listOf(
         iosX64(),
         iosArm64(),
@@ -29,8 +30,13 @@ kotlin {
             isStatic = true
         }
     }
-    
+
     sourceSets {
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
+            implementation(libs.coroutines.test)
+        }
+
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
@@ -47,6 +53,8 @@ kotlin {
 
             implementation(libs.compose.ui.tooling)
             implementation(libs.compose.preview)
+
+            implementation(libs.mockk)
         }
 
         commonMain.dependencies {
@@ -74,7 +82,6 @@ kotlin {
             implementation(libs.voyager.navigator)
             implementation(libs.voyager.koin)
             implementation(libs.voyager.screenmodel)
-            implementation(libs.voyager.transitions)
 
             // Ktor and Ktorfit
             implementation(libs.ktorfit)
@@ -109,7 +116,13 @@ android {
     }
     packaging {
         resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += setOf(
+                "META-INF/LICENSE.md",
+                "META-INF/LICENSE-notice.md",
+                "META-INF/LICENSE",
+                "META-INF/NOTICE",
+                "/META-INF/{AL2.0,LGPL2.1}"
+            )
         }
     }
     buildTypes {
