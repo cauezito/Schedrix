@@ -52,6 +52,17 @@ https://github.com/user-attachments/assets/3d2db585-d147-434d-a724-33bf4d47a884
   https://github.com/user-attachments/assets/f5cf48ff-bd57-4c24-a52a-02e7ae8a73d6  
 </details>
 
+<details>
+  <summary>App icons</summary>
+  <strong>Android</strong><br>
+  
+ ![Screenshot 2025-04-20 at 17 56 02](https://github.com/user-attachments/assets/93eff2d8-7e75-43be-a057-43018ed9d166)
+
+  <strong>iOS</strong><br>
+  
+ ![Screenshot 2025-04-20 at 17 54 46](https://github.com/user-attachments/assets/d7bf97b9-6c40-4d7f-96a1-60b49f6081ac)
+</details>
+
 <br>
 
 ## Architecture
@@ -81,9 +92,8 @@ https://github.com/user-attachments/assets/3d2db585-d147-434d-a724-33bf4d47a884
 - Error handling  
 - Date/time selection  
 
-<br>
-> See: `AppointmentScreenModelTest.kt`
-<br>
+> See: AppointmentScreenModelTest.kt
+
 
 ### Example test cases
 
