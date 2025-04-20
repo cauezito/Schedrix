@@ -16,12 +16,12 @@ internal object Dimens {
     val dimens_24 = 24.dp
     val dimens_28 = 28.dp
     val dimens_32 = 32.dp
+    val dimens_36 = 36.dp
     val dimens_40 = 40.dp
     val dimens_44 = 44.dp
     val dimens_46 = 46.dp
     val dimens_58 = 58.dp
     val dimens_60 = 60.dp
-    val dimens_62 = 62.dp
     val dimens_78 = 78.dp
     val dimens_100 = 100.dp
     val dimens_350 = 350.dp
