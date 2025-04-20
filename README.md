@@ -17,6 +17,43 @@ Users can choose a date, pick a time, and confirm the meeting by filling in thei
 
 <br>
 
+## Screens
+
+<details>
+  <summary>Error + try again</summary>
+  <br>
+  <strong>Android</strong><br>
+  
+  https://github.com/user-attachments/assets/1b739ff3-5c55-4d3f-91d7-95664069e1f7
+
+  <br><br>
+  <strong>iOS</strong>
+
+https://github.com/user-attachments/assets/3d2db585-d147-434d-a724-33bf4d47a884
+
+</details>
+
+<details>
+  <summary>Dark mode</summary>
+  <strong>Android</strong><br>
+  
+  https://github.com/user-attachments/assets/b7ecc4ad-eedf-43a3-bf90-e48febcf0ec9
+
+  <br><br>
+  <strong>iOS</strong><br>
+  
+  https://github.com/user-attachments/assets/42d68ba0-0f25-4509-8961-b4e1be073a1f
+</details>
+
+<details>
+  <summary>Redirect to Google Calendar</summary>
+  <strong>Android</strong><br>
+  
+  https://github.com/user-attachments/assets/f5cf48ff-bd57-4c24-a52a-02e7ae8a73d6  
+</details>
+
+<br>
+
 ## Architecture
 
 - **MVVM**: All screens share the same logic class. I call it `ScreenModel` because of Voyager, but it's the same idea as a ViewModel.  
@@ -24,7 +61,10 @@ Users can choose a date, pick a time, and confirm the meeting by filling in thei
 - **No business logic in UI**: The UI just observes state. All logic lives in the ScreenModel.  
 - **Expect/actual**: Some features need different platform logic. For example, opening Google Calendar uses an `Intent` on Android and `UIApplication.sharedApplication.openURL` on iOS. I use `expect` in common code and implement it with `actual` on each platform.  
 - **ScreenModel tied to screen**: Voyager ensures the ScreenModel stays alive with the screen. Using only Koin could cause unwanted recreation on recomposition.  
-- **Visibility control**: I used `internal` in most files to prevent leaking logic across modules and keep the codebase clean.  
+- **Visibility control**: I used `internal` in most files to prevent leaking logic across modules and keep the codebase clean.
+- **No magic numbers/hard-coded text**: Colors, strings, content descriptions, and dimensions are declared as constants to avoid hardcoding (which is considered bad practice and... ugly =P).
+- **Componentization**: Components and code are isolated for reuse, following the DRY principle.
+- **Content description text to non-text components**: It's important to guarantee that VoiceOver/Talkback will be able to provide the screen context to user
 
 <br>
 
@@ -68,7 +108,7 @@ Users can choose a date, pick a time, and confirm the meeting by filling in thei
 <br>
 
 **Coverage:**
-> ⚠️ I know the importance of a good test coverage. But for know, I focused to reach 100% only on presentation layer, especially on ScreenModel, because there are many logics there.
+> ⚠️ I know test coverage matters, but for now I focused on hitting 100% in the presentation layer, mainly in the `ScreenModel`, since that’s where most of the logic lives
 
 ![Screenshot 2025-04-20 at 16 33 36](https://github.com/user-attachments/assets/217983c4-1a5e-4b33-9268-16c8b495b4cf)
 
