@@ -41,5 +41,9 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>LSApplicationQueriesSchemes</key>
+    <array>
+        <string>com.google.calendar</string>
+    </array>
 </dict>
 </plist>
