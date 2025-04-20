@@ -10,8 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
-import br.com.cauezito.schedrix.ui.tokens.Weight.X_SMALL
-import br.com.cauezito.schedrix.ui.tokens.Weight.X_SMALL2
 
 @Composable
 internal fun CustomInputField(
@@ -38,11 +36,12 @@ internal fun CustomInputField(
             unfocusedTextColor = Color.White,
             cursorColor = Color.White,
             focusedBorderColor = Color.White,
-            unfocusedBorderColor = Color.White.copy(alpha = X_SMALL),
+            unfocusedBorderColor = Color.White,
             focusedLabelColor = Color.White,
-            unfocusedLabelColor = Color.White.copy(alpha = X_SMALL2),
+            unfocusedLabelColor = Color.White,
             focusedContainerColor = Color.Transparent,
-            unfocusedContainerColor = Color.Transparent
+            unfocusedContainerColor = Color.Transparent,
+            errorSupportingTextColor = Color.White
         )
     )
 }
