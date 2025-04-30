@@ -10,6 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 
 @Composable
 internal fun CustomInputField(
@@ -21,6 +23,8 @@ internal fun CustomInputField(
     supportingText: @Composable (() -> Unit)? = null,
     onValueChange: (String) -> Unit
 ) {
+    val visualTransformation = if (keyboardType == KeyboardType.Password) PasswordVisualTransformation() else VisualTransformation.None
+
     OutlinedTextField(
         value = value,
         onValueChange = { if (it.length <= maxLength) onValueChange(it) },
@@ -28,8 +32,9 @@ internal fun CustomInputField(
         isError = isError,
         supportingText = supportingText,
         singleLine = true,
+        visualTransformation = visualTransformation,
         modifier = Modifier.fillMaxWidth(),
-        keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
+        keyboardOptions = KeyboardOptions.Default.copy(keyboardType = keyboardType),
         textStyle = MaterialTheme.typography.bodyLarge.copy(color = Color.White),
         colors = OutlinedTextFieldDefaults.colors(
             focusedTextColor = Color.White,
