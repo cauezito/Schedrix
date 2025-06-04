@@ -28,6 +28,7 @@ internal class AppointmentTimeScreen() : Screen {
         AppointmentTimeScreenContent(
             state = state,
             onSelectedTime = onSelectedTime,
+            onTimezoneChange = screenModel::changeTimezone,
             onBackPressed = onBackPressed
         )
     }
@@ -36,11 +37,13 @@ internal class AppointmentTimeScreen() : Screen {
     private fun AppointmentTimeScreenContent(
         state: AppointmentState,
         onSelectedTime: (AppointmentDateTime) -> Unit,
+        onTimezoneChange: (String) -> Unit,
         onBackPressed: () -> Unit
     ) {
         AppointmentTimeSelectionSection(
             state = state,
             onSelectedTime = onSelectedTime,
+            onTimezoneChange = onTimezoneChange,
             onBackPressed
         )
     }

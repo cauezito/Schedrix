@@ -265,4 +265,18 @@ internal class AppointmentScreenModelTest {
             assertFalse(state.showContentLoading)
             assertTrue(state.calendarDays.isNotEmpty())
     }
+
+    @Test
+    fun `WHEN changeTimezone THEN updates timezone and recalculates times`() = runTest(dispatcher) {
+        screenModel.fetchAvailableTimes()
+        advanceUntilIdle()
+        screenModel.changeSelectedDate(fakeDate)
+        val firstTime = screenModel.state.value.selectedDateTimes.first()
+
+        screenModel.changeTimezone("Asia/Tokyo")
+
+        val updatedState = screenModel.state.value
+        assertTrue(updatedState.currentTimezone.contains("Asia"))
+        assertNotEquals(firstTime, updatedState.selectedDateTimes.first())
+    }
 }

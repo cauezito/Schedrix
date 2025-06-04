@@ -36,6 +36,7 @@ import br.com.cauezito.schedrix.ui.tokens.Strings.CONFIRMATION_SECTION_INPUT_NAM
 import br.com.cauezito.schedrix.ui.tokens.Strings.CONFIRMATION_SECTION_NAME_INPUT_SUPPORT_TEXT
 import br.com.cauezito.schedrix.ui.tokens.Strings.CONFIRMATION_SECTION_TITLE
 import br.com.cauezito.schedrix.ui.tokens.Strings.CONFIRMATION_SECTION_TOP_BAR_CONTENT_DESCRIPTION
+import kotlinx.datetime.TimeZone
 
 @Composable
 internal fun AppointmentConfirmationSection(
@@ -51,6 +52,7 @@ internal fun AppointmentConfirmationSection(
             redirectLink = generateGoogleCalendarLink(
                 userName = name,
                 startDateTime = state.finalSelectedDateTime,
+                timezone = TimeZone.of(state.currentTimezone.replace(" - ", "/").replace(" ", "_"))
             )
         )
     }

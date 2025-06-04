@@ -7,10 +7,10 @@ import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 
-fun Appointment.asPresentation(): AppointmentPresentation {
-    val availableAppointments = this.availableTimes.map { date ->
+fun Appointment.asPresentation(timeZone: TimeZone): AppointmentPresentation {
+    val availableAppointments = availableTimes.map { date ->
         val instant = Instant.parse(date)
-        val localDateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
+        val localDateTime = instant.toLocalDateTime(timeZone)
 
         AppointmentDateTime(availableAppointmentDateTime = localDateTime)
     }

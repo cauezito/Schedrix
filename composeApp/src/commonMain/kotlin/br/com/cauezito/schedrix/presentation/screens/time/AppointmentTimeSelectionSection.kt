@@ -22,6 +22,7 @@ import br.com.cauezito.schedrix.presentation.AppointmentState
 import br.com.cauezito.schedrix.presentation.model.AppointmentDateTime
 import br.com.cauezito.schedrix.ui.components.shared.ScaffoldStructure
 import br.com.cauezito.schedrix.ui.components.shared.TimeSelectorItem
+import br.com.cauezito.schedrix.ui.components.shared.TimezoneSelector
 import br.com.cauezito.schedrix.ui.tokens.Dimens.dimens_100
 import br.com.cauezito.schedrix.ui.tokens.Dimens.dimens_12
 import br.com.cauezito.schedrix.ui.tokens.Dimens.dimens_14
@@ -41,6 +42,7 @@ import br.com.cauezito.schedrix.ui.tokens.Strings.appointmentQuestion
 internal fun AppointmentTimeSelectionSection(
     state: AppointmentState,
     onSelectedTime: (AppointmentDateTime) -> Unit,
+    onTimezoneChange: (String) -> Unit,
     onBackPressed: () -> Unit
 ) {
     ScaffoldStructure(
@@ -90,10 +92,9 @@ internal fun AppointmentTimeSelectionSection(
                         color = Color.Black,
                     )
 
-                    Text(
-                        text = state.currentTimezone,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = Color.Black
+                    TimezoneSelector(
+                        current = state.currentTimezone,
+                        onTimezoneSelected = onTimezoneChange
                     )
                 }
             }

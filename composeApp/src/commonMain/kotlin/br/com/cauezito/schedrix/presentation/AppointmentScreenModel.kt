@@ -1,5 +1,6 @@
 package br.com.cauezito.schedrix.presentation
 
+import br.com.cauezito.schedrix.domain.model.Appointment
 import br.com.cauezito.schedrix.domain.useCase.GetAvailableAppointmentTimesUseCase
 import br.com.cauezito.schedrix.extensions.DateExtensions
 import br.com.cauezito.schedrix.extensions.DateExtensions.availableTimesFromSelectedDate
@@ -34,15 +35,17 @@ class AppointmentScreenModel(
     val state: StateFlow<AppointmentState> = _state
 
     private val todayDate = DateExtensions.getCurrentDate().date
-    private val currentTimeZone = TimeZone.currentSystemDefault().toString().formatTimezone()
+    private var selectedTimeZone: TimeZone = TimeZone.currentSystemDefault()
+    private val currentTimeZoneFormatted = selectedTimeZone.toString().formatTimezone()
     private var appointments: List<AppointmentDateTime> = emptyList()
-    private var choseStartAndEndDates: Pair<String, String> = Pair("", "")
+    private var appointmentDomain: Appointment? = null
+    private var choseStartAndEndDates: Pair<String, String> = "" to ""
 
     init {
         choseStartAndEndDates = todayDate.formatStartAndEnd()
         _state.value = _state.value.copy(
             currentMonthYear = todayDate,
-            currentTimezone = currentTimeZone
+            currentTimezone = currentTimeZoneFormatted
         )
     }
 
@@ -50,13 +53,14 @@ class AppointmentScreenModel(
         try {
             val monthPlaceHolder = _state.value.currentMonthYear.month.number.defineMonthPlaceholder()
 
-            val result = getAvailableTimes(
+            val domainAppointment = getAvailableTimes(
                 choseStartAndEndDates.first,
                 choseStartAndEndDates.second,
                 monthPlaceHolder
-            ).asPresentation()
+            )
 
-            appointments = result.availableAppointments
+            appointmentDomain = domainAppointment
+            appointments = domainAppointment.asPresentation(selectedTimeZone).availableAppointments
 
             _state.value = _state.value.copy(
                 calendarDays = mapToAppointmentCalendarDay(
@@ -115,6 +119,29 @@ class AppointmentScreenModel(
         )
     }
 
+    internal fun changeTimezone(timezoneId: String) {
+        selectedTimeZone = TimeZone.of(timezoneId)
+        _state.value = _state.value.copy(
+            currentTimezone = timezoneId.formatTimezone()
+        )
+
+        appointmentDomain?.let { domainAppointment ->
+            appointments = domainAppointment.asPresentation(selectedTimeZone).availableAppointments
+            _state.value.selectedDate?.let { date ->
+                val availableTimes = date.availableTimesFromSelectedDate(appointments)
+                _state.value = _state.value.copy(selectedDateTimes = availableTimes)
+            }
+
+            _state.value = _state.value.copy(
+                calendarDays = mapToAppointmentCalendarDay(
+                    currentMonth = _state.value.currentMonthYear,
+                    appointments = appointments,
+                    selectedDate = _state.value.selectedDate
+                )
+            )
+        }
+    }
+
     internal fun selectAppointmentTime(dateTime: AppointmentDateTime) {
         _state.value = _state.value.copy(
             isNameValid = null,
@@ -127,7 +154,7 @@ class AppointmentScreenModel(
     internal fun tryAgainAfterError() {
         _state.value = _state.value.copy(
             currentMonthYear = todayDate,
-            currentTimezone = currentTimeZone,
+            currentTimezone = selectedTimeZone.toString().formatTimezone(),
             showContentLoading = true,
             isNameValid = null,
             isEmailValid = null,
