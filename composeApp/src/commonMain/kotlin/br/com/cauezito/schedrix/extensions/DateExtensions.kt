@@ -46,11 +46,11 @@ internal object DateExtensions {
         return "${hour12.toString().padStart(2, '0')}:${minuteStr}\n${amPm}"
     }
 
-    internal fun LocalDate.availableTimesFromSelectedDate(appointments: List<AppointmentDateTime>) =
-        appointments
-            .filter { it.availableAppointmentDateTime.date  == this }
-            .sortedBy { it.availableAppointmentDateTime.time
-    }
+    internal fun LocalDate.availableTimesFromSelectedDate(
+        appointments: List<AppointmentDateTime>
+    ) = appointments
+        .filter { it.availableAppointmentDateTime.date == this }
+        .sortedBy { it.availableAppointmentDateTime.time }
 
     @OptIn(FormatStringsInDatetimeFormats::class)
     internal fun LocalDateTime.formatLocalDateTime(format: String = "yyyy-MM-dd'T'HH:mm"): String {
